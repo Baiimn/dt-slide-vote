@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>PROTOTYPE — Design Thinking deck structure, 3 shapes</title>
+<!--
+  THROWAWAY PROTOTYPE. Not the deck.
+  Question it answers: what SHAPE do the 12 slides of ONE group's 10-minute talk take?
+  ONE GROUP, ONE CANTEEN. The teacher sees a single group's own work, start to finish.
+  The other group never appears on a slide — the same template is filled twice, once
+  per group, with that group's own canteen, own numbers, own idea.
+  Three structurally different answers, switchable with ?variant=A|B|C.
+  Content in [brackets] is a placeholder, filled from that group's report later —
+  so this file decides shape only and cannot contradict the reports.
+  Slide beats follow the storyline locked in _index.md:216
+  purpose - problem - who - insight - idea - prototype - what the test showed - what next.
+-->
+<style>
+  :root{
+    --ink:#111;
+    --paper:#fff;
+    --accent:#1b6ca8;     /* deck accent — one group, one colour */
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:#1b1b1b;font-family:"Segoe UI",system-ui,sans-serif;color:var(--ink);
+       display:flex;align-items:center;justify-content:center;overflow:hidden}
+
+  /* ---- 16:9 stage ---------------------------------------------------- */
+  #stage{width:min(96vw, calc((100vh - 120px) * 16 / 9));aspect-ratio:16/9;
+         background:var(--paper);position:relative;box-shadow:0 10px 50px rgba(0,0,0,.6);
+         container-type:size;overflow:hidden}
+  .slide{position:absolute;inset:0;padding:4cqw;display:flex;flex-direction:column;
+         font-size:2.3cqw;line-height:1.35}
+  h1{font-size:5.4cqw;line-height:1.08}
+  h2{font-size:3.7cqw;line-height:1.15}
+  b{font-weight:800}
+
+  /* ---- A: stage spine ------------------------------------------------ */
+  .A-rail{display:flex;gap:.6cqw;margin-bottom:2.4cqw}
+  .A-rail span{flex:1;border:.2cqw solid var(--ink);padding:.7cqw .4cqw;text-align:center;
+               font-size:1.9cqw;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+  .A-rail span.lit{background:var(--accent);border-color:var(--accent);color:#fff}
+  .A-claim{font-size:3cqw;font-weight:700;line-height:1.25;color:var(--accent);
+           margin:1.6cqw 0 2.4cqw}
+  .A-rows{display:flex;flex-direction:column;gap:1.1cqw;flex:1;min-height:0}
+  .A-row{display:grid;grid-template-columns:13cqw 1fr 13cqw;gap:1.4cqw;align-items:baseline;
+         border-bottom:.15cqw solid var(--ink);padding-bottom:.8cqw}
+  .A-row .lab{font-weight:800}
+  .A-row .fig{font-weight:800;text-align:right}
+  .A-foot{margin-top:auto;padding-top:1.2cqw;border-top:.3cqw solid var(--ink);font-weight:700}
+
+  /* ---- B: story arc, full bleed -------------------------------------- */
+  .B{justify-content:center}
+  .B-kicker{font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:2.3cqw;
+            color:var(--accent);margin-bottom:1.6cqw}
+  .B-claim{font-size:5cqw;font-weight:800;line-height:1.12;max-width:88%}
+  .B-cards{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:1.6cqw;
+           margin:3cqw 0 3.4cqw}
+  .B-card{border:.25cqw solid var(--ink);padding:1.6cqw;display:flex;flex-direction:column;gap:1cqw}
+  .B-card .lab{font-weight:800;color:var(--accent)}
+  .B-card .fig{font-size:3cqw;font-weight:800;margin-top:auto}
+  .B-foot{position:absolute;left:4cqw;right:4cqw;bottom:2.4cqw;display:flex;justify-content:space-between;
+          font-weight:700;border-top:.25cqw solid var(--ink);padding-top:1cqw}
+
+  /* ---- C: number first ------------------------------------------------ */
+  .C-two{display:grid;grid-template-columns:38% 1fr;gap:3cqw;flex:1;min-height:0;align-items:start}
+  .C-big{background:var(--accent);color:#fff;padding:2.2cqw;height:100%;
+         display:flex;flex-direction:column;justify-content:center;gap:1cqw}
+  .C-big .num{font-size:8cqw;font-weight:800;line-height:1}
+  .C-big .cap{font-size:2.3cqw;font-weight:700}
+  .C-body{display:flex;flex-direction:column;gap:1.4cqw;min-height:0}
+  .C-body h2{margin-bottom:.4cqw}
+  .C-list{display:flex;flex-direction:column;gap:1.1cqw}
+  .C-item{display:grid;grid-template-columns:12cqw 1fr;gap:1.4cqw;align-items:baseline}
+  .C-item .lab{font-weight:800;color:var(--accent)}
+  .C-spine{display:flex;gap:.4cqw;margin-top:2cqw}
+  .C-spine span{flex:1;height:1.4cqw;border:.18cqw solid var(--ink)}
+  .C-spine span.lit{background:var(--ink)}
+
+  /* ---- switcher (not part of the design) ------------------------------ */
+  #bar{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:#111;color:#fff;
+       border:2px solid #fff;border-radius:999px;display:flex;align-items:center;gap:16px;
+       padding:9px 16px;font:700 14px/1 "Segoe UI",sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.5);z-index:9}
+  #bar button{background:#fff;color:#111;border:0;border-radius:999px;min-width:26px;height:26px;
+              padding:0 10px;font:800 14px/1 sans-serif;cursor:pointer;
+              white-space:nowrap;flex:0 0 auto}
+  #bar .sep{color:#fff}
+
+  /* tap the left/right third of the slide to move — phones have no arrow keys */
+  .zone{position:absolute;top:0;bottom:0;width:32%;z-index:5;-webkit-tap-highlight-color:transparent}
+  #zl{left:0} #zr{right:0}
+  /* a phone held upright would show a matchbox-sized slide, so turn the slide instead */
+  @media (orientation:portrait) and (max-width:900px){
+    #stage{width:min(80vh, calc((100vw - 16px) * 16 / 9));flex:none;transform:rotate(90deg)}
+  }
+  @media (max-width:820px){
+    #bar{gap:8px;padding:9px 11px;font-size:12px;max-width:96vw}
+    #bar button{min-width:34px;height:34px;font-size:15px}
+    #bar #tm, #bar .sep:last-of-type{display:none}  /* time budget is for the builder, not the voter */
+  }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+
+<div id="bar">
+  <button id="pv">&#8592;</button>
+  <span id="sl">slide</span>
+  <button id="nx">&#8594;</button>
+  <span class="sep">|</span>
+  <span id="vn">variant</span>
+  <button id="vb">shape</button>
+  <span class="sep">|</span>
+  <span id="tm">time</span>
+</div>
+
+<script>
+/* ---- the 12 beats of ONE group's talk. Same content in all three shapes, so only
+       SHAPE is judged. No second group anywhere: [canteen] is this group's canteen. ---- */
+const STAGES = ['Empathize','Define','Ideate','Prototype','Test'];
+
+const SLIDES = [
+  { stage:null, kicker:'1203220 Business Innovation', sec:45,
+    title:'[Deck title — the promise, not the assignment name]',
+    claim:'[One sentence: what we set out to fix at lunch peak in canteen [X]]',
+    big:{ num:'[N]', cap:'[members in the group]' },
+    rows:[ {lab:'Group', txt:'[Group name / number]', fig:'[canteen X]'},
+           {lab:'Leader', txt:'[Leader name, student ID]', fig:'[ID]'},
+           {lab:'Members', txt:'[Names, IDs]', fig:'[N people]'} ] },
+
+  { stage:null, kicker:'Purpose', sec:40,
+    title:'Why this domain',
+    claim:'[Domain: university canteen · sub-domain: canteen environment, canteen [X], lunch peak 11:30-13:00, while eating]',
+    big:{ num:'[90]', cap:'[minutes of lunch peak, 11:30-13:00]' },
+    rows:[ {lab:'Where', txt:'[Canteen X — what it is, how many seats]', fig:'[seats]'},
+           {lab:'When', txt:'[Why the peak hour and not the whole day]', fig:'[11:30-13:00]'},
+           {lab:'Who', txt:'[Students eating a meal, not staff, not takeaway]', fig:'[scope]'} ] },
+
+  { stage:null, kicker:'The problem', sec:50,
+    title:'[What lunch peak actually looks like]',
+    claim:'[The scene in one sentence a stranger would recognise]',
+    big:{ num:'[n]', cap:'[the symptom, as a number]' },
+    rows:[ {lab:'Symptom', txt:'[The visible symptom we walked in on]', fig:'[Fig n]'},
+           {lab:'Observed', txt:'[Observation sessions — when, how long]', fig:'[n sessions]'},
+           {lab:'Immersion', txt:'[What we did ourselves, as users]', fig:'[Fig n]'} ] },
+
+  { stage:'Empathize', kicker:'Who we talked to', sec:50,
+    title:'How we got the evidence',
+    claim:'[Face-to-face interviews at the table, during the meal, recorded and consented]',
+    big:{ num:'[n]', cap:'[people interviewed, all in canteen [X]]' },
+    rows:[ {lab:'Interviews', txt:'[Pairs of 2 — one asks, one types]', fig:'[n rows]'},
+           {lab:'Dates', txt:'[Fieldwork window]', fig:'[dates]'},
+           {lab:'Tools', txt:'[Empathy map · persona · journey map · VoC]', fig:'[Fig n-n]'} ] },
+
+  { stage:'Empathize', kicker:'What we heard', sec:55,
+    title:'[The thing people said that we did not expect]',
+    claim:'[One quote, verbatim, in their own words]',
+    big:{ num:'[n/n]', cap:'[said the same thing — the top cluster]' },
+    rows:[ {lab:'Cluster 1', txt:'[Top affinity cluster]', fig:'[n rows]'},
+           {lab:'Cluster 2', txt:'[Second cluster]', fig:'[n rows]'},
+           {lab:'Persona', txt:'[Who we built the persona from]', fig:'[Fig n]'} ] },
+
+  { stage:'Define', kicker:'Insight', sec:60,
+    title:'The root cause, not the complaint',
+    claim:'[Why the obvious answer — more staff, more tables — is the wrong lever]',
+    big:{ num:'[5]', cap:'[Whys down to the root cause]' },
+    rows:[ {lab:'Complaint', txt:'[What they said the problem was]', fig:'[surface]'},
+           {lab:'Root cause', txt:'[What the 5 Whys actually reached]', fig:'[Fig n]'},
+           {lab:'POV', txt:'[Persona] needs [need] because [insight]', fig:'[POV]'} ] },
+
+  { stage:'Ideate', kicker:'How might we', sec:45,
+    title:'[The HMW question we chose to answer]',
+    claim:'[HMW ... ?]',
+    big:{ num:'[n]', cap:'[ideas generated, then narrowed]' },
+    rows:[ {lab:'HMW', txt:'[The question, and the two we dropped]', fig:'[3 HMW]'},
+           {lab:'Ideas', txt:'[How the session ran — everyone contributed]', fig:'[n ideas]'},
+           {lab:'Narrowed', txt:'[2x2 grid: impact against effort]', fig:'[Fig n]'} ] },
+
+  { stage:'Ideate', kicker:'The idea', sec:60,
+    title:'[Name of the chosen idea]',
+    claim:'[What it is, in one sentence someone could build]',
+    big:{ num:'[1]', cap:'[idea taken forward, out of [n]]' },
+    rows:[ {lab:'Why this', txt:'[The selection criteria it won on]', fig:'[rank 1]'},
+           {lab:'Runner-up', txt:'[What we dropped and why]', fig:'[rank 2]'},
+           {lab:'Fits POV', txt:'[How it answers the POV, not the complaint]', fig:'[link]'} ] },
+
+  { stage:'Prototype', kicker:'Prototype', sec:60,
+    title:'What we built to test it',
+    claim:'[The cheapest thing that could prove the idea wrong]',
+    big:{ num:'[฿n]', cap:'[cost to build the prototype]' },
+    rows:[ {lab:'Form', txt:'[Paper / mock / storyboard / walkthrough]', fig:'[Fig n]'},
+           {lab:'Built in', txt:'[Time to build]', fig:'[n hours]'},
+           {lab:'v2', txt:'[What changed after the first round]', fig:'[Fig n]'} ] },
+
+  { stage:'Test', kicker:'What the test showed', sec:70,
+    title:'[The result, stated as a number]',
+    claim:'[What changed — and the one thing that did not work]',
+    big:{ num:'[n]', cap:'[testers, incl. extreme and lead users]' },
+    rows:[ {lab:'Worked', txt:'[What the testers accepted]', fig:'[result]'},
+           {lab:'Failed', txt:'[What broke — say it out loud]', fig:'[result]'},
+           {lab:'Extreme', txt:'[What the extreme / lead user saw that others missed]', fig:'[Fig n]'} ] },
+
+  { stage:null, kicker:'Next', sec:50,
+    title:'What we would do next',
+    claim:'[The next iteration, and what would have to be true for it to scale]',
+    big:{ num:'[n]', cap:'[weeks to the next test]' },
+    rows:[ {lab:'Next test', txt:'[The next thing to falsify]', fig:'[when]'},
+           {lab:'Owner', txt:'[Who runs it]', fig:'[who]'},
+           {lab:'Learned', txt:'[What the process taught us, not the idea]', fig:'[reflection]'} ] },
+
+  { stage:null, kicker:'Q&A', sec:15,   /* hand-off only; the Q&A clock is separate */
+    title:'Questions',
+    claim:'[Thank you — group name, members and IDs]',
+    big:{ num:'[N]', cap:'[of us, any one can take the question]' },
+    rows:[ {lab:'Group', txt:'[Group name, canteen X]', fig:'[group]'},
+           {lab:'Members', txt:'[All names and IDs]', fig:'[N people]'},
+           {lab:'Report', txt:'[Submitted — date]', fig:'[date]'} ] }
+];
+
+const NAMES = { A:'Stage spine', B:'Story arc', C:'Number first' };
+
+/* ---- one render function per shape. Data is shared, layout is not. ---- */
+function renderA(s, i){
+  const rail = STAGES.map(st =>
+    `<span class="${st===s.stage?'lit':''}">${st}</span>`).join('');
+  const rows = s.rows.map(r =>
+    `<div class="A-row"><div class="lab">${r.lab}</div><div>${r.txt}</div><div class="fig">${r.fig}</div></div>`).join('');
+  return `<div class="slide">
+    <div class="A-rail">${rail}</div>
+    <h2>${s.title}</h2>
+    <div class="A-claim">${s.claim}</div>
+    <div class="A-rows">${rows}</div>
+    <div class="A-foot">${s.kicker} · slide ${i+1} of ${SLIDES.length}</div>
+  </div>`;
+}
+
+function renderB(s, i){
+  const cards = s.rows.map(r =>
+    `<div class="B-card"><div class="lab">${r.lab}</div><div>${r.txt}</div><div class="fig">${r.fig}</div></div>`).join('');
+  return `<div class="slide B">
+    <div class="B-kicker">${s.kicker}</div>
+    <div class="B-claim">${s.claim}</div>
+    <div class="B-cards">${cards}</div>
+    <div class="B-foot"><span>${s.stage ? s.stage : s.title}</span><span>${i+1} / ${SLIDES.length}</span></div>
+  </div>`;
+}
+
+function renderC(s, i){
+  const items = s.rows.map(r =>
+    `<div class="C-item"><div class="lab">${r.lab}</div><div>${r.txt}</div></div>`).join('');
+  const spine = SLIDES.map((_, k) => `<span class="${k===i?'lit':''}"></span>`).join('');
+  return `<div class="slide">
+    <div class="C-two">
+      <div class="C-big"><div class="num">${s.big.num}</div><div class="cap">${s.big.cap}</div></div>
+      <div class="C-body">
+        <h2>${s.title}</h2>
+        <div style="font-weight:700">${s.claim}</div>
+        <div class="C-list">${items}</div>
+      </div>
+    </div>
+    <div class="C-spine">${spine}</div>
+  </div>`;
+}
+
+const RENDER = { A:renderA, B:renderB, C:renderC };
+
+/* ---- state ---- */
+const params = new URLSearchParams(location.search);
+let variant = (params.get('variant') || 'A').toUpperCase();
+if(!RENDER[variant]) variant = 'A';
+let idx = 0;
+
+const TOTAL = SLIDES.reduce((a, s) => a + s.sec, 0);
+const mmss = t => Math.floor(t/60) + ':' + String(t%60).padStart(2,'0');
+
+function draw(){
+  document.getElementById('stage').innerHTML = RENDER[variant](SLIDES[idx], idx) +
+    '<div class="zone" id="zl"></div><div class="zone" id="zr"></div>';
+  document.getElementById('zl').onclick = () => go(-1);
+  document.getElementById('zr').onclick = () => go(1);
+  const start = SLIDES.slice(0, idx).reduce((a, s) => a + s.sec, 0);
+  document.getElementById('sl').textContent = `slide ${idx+1}/${SLIDES.length}`;
+  document.getElementById('vn').textContent = `${variant} — ${NAMES[variant]}`;
+  document.getElementById('tm').textContent =
+    `${mmss(start)}–${mmss(start + SLIDES[idx].sec)} of ${mmss(TOTAL)}`;
+  const u = new URL(location); u.searchParams.set('variant', variant);
+  history.replaceState(null, '', u);
+}
+
+const keys = Object.keys(RENDER);
+const cycle = () => { variant = keys[(keys.indexOf(variant)+1) % keys.length]; draw(); };
+const go = d => { idx = (idx + d + SLIDES.length) % SLIDES.length; draw(); };
+
+document.getElementById('pv').onclick = () => go(-1);
+document.getElementById('nx').onclick = () => go(1);
+document.getElementById('vb').onclick = cycle;
+
+addEventListener('keydown', e => {
+  const t = e.target;
+  if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if(e.key === 'ArrowRight') go(1);
+  else if(e.key === 'ArrowLeft') go(-1);
+  else if(e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === ' ') { e.preventDefault(); cycle(); }
+  else if('abcABC'.includes(e.key) && RENDER[e.key.toUpperCase()]) { variant = e.key.toUpperCase(); draw(); }
+});
+
+draw();
+</script>
+</body>
+</html>
