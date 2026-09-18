@@ -3,311 +3,268 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>PROTOTYPE — Design Thinking deck structure, 3 shapes</title>
-<!--
-  THROWAWAY PROTOTYPE. Not the deck.
-  Question it answers: what SHAPE do the 12 slides of ONE group's 10-minute talk take?
-  ONE GROUP, ONE CANTEEN. The teacher sees a single group's own work, start to finish.
-  The other group never appears on a slide — the same template is filled twice, once
-  per group, with that group's own canteen, own numbers, own idea.
-  Three structurally different answers, switchable with ?variant=A|B|C.
-  Content in [brackets] is a placeholder, filled from that group's report later —
-  so this file decides shape only and cannot contradict the reports.
-  Slide beats follow the storyline locked in _index.md:216
-  purpose - problem - who - insight - idea - prototype - what the test showed - what next.
--->
+<title>Group 1 deck theme vote</title>
+<!-- PROTOTYPE set 2, delete once a theme wins (deck-storyboard/PLAN.md D3). Question: which look + motion? -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Schibsted+Grotesk:wght@400;600;800&family=JetBrains+Mono:wght@500;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;600&family=Instrument+Serif&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#111;
-    --paper:#fff;
-    --accent:#1b6ca8;     /* deck accent — one group, one colour */
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{background:#1b1b1b;font-family:"Segoe UI",system-ui,sans-serif;color:var(--ink);
-       display:flex;align-items:center;justify-content:center;overflow:hidden}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0b0b0b;overflow:hidden}
+#viewport{position:fixed;inset:0 0 64px 0}
+.stage{width:1920px;height:1080px;position:absolute;left:50%;top:50%;transform-origin:center;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;padding:80px 110px;flex-direction:column}
+.slide.on{display:flex}
+img{display:block}
 
-  /* ---- 16:9 stage ---------------------------------------------------- */
-  #stage{width:min(96vw, calc((100vh - 120px) * 16 / 9));aspect-ratio:16/9;
-         background:var(--paper);position:relative;box-shadow:0 10px 50px rgba(0,0,0,.6);
-         container-type:size;overflow:hidden}
-  .slide{position:absolute;inset:0;padding:4cqw;display:flex;flex-direction:column;
-         font-size:2.3cqw;line-height:1.35}
-  h1{font-size:5.4cqw;line-height:1.08}
-  h2{font-size:3.7cqw;line-height:1.15}
-  b{font-weight:800}
+:root{--ease:cubic-bezier(0.16,1,0.3,1);--ease-q:cubic-bezier(0.25,1,0.5,1)}
 
-  /* ---- A: stage spine ------------------------------------------------ */
-  .A-rail{display:flex;gap:.6cqw;margin-bottom:2.4cqw}
-  .A-rail span{flex:1;border:.2cqw solid var(--ink);padding:.7cqw .4cqw;text-align:center;
-               font-size:1.9cqw;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
-  .A-rail span.lit{background:var(--accent);border-color:var(--accent);color:#fff}
-  .A-claim{font-size:3cqw;font-weight:700;line-height:1.25;color:var(--accent);
-           margin:1.6cqw 0 2.4cqw}
-  .A-rows{display:flex;flex-direction:column;gap:1.1cqw;flex:1;min-height:0}
-  .A-row{display:grid;grid-template-columns:13cqw 1fr 13cqw;gap:1.4cqw;align-items:baseline;
-         border-bottom:.15cqw solid var(--ink);padding-bottom:.8cqw}
-  .A-row .lab{font-weight:800}
-  .A-row .fig{font-weight:800;text-align:right}
-  .A-foot{margin-top:auto;padding-top:1.2cqw;border-top:.3cqw solid var(--ink);font-weight:700}
+/* ---------- shared content structure ---------- */
+h1{font-size:132px;line-height:1;text-wrap:balance}
+h2{font-size:80px;line-height:1.02;text-wrap:balance}
+.body,.meta,.refl p,.qbar,.qhead,.tile b,.rail span{font-size:34px;line-height:1.3}
+.rail{display:flex;gap:44px;margin-bottom:26px}
+.rail span{position:relative;padding-bottom:6px}
+.head{margin-bottom:40px}
+.meta{display:grid;grid-template-columns:1.3fr 1fr;gap:70px;margin-top:auto}
+.tiles{flex:1;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr;gap:24px;min-height:0}
+.tile{display:flex;flex-direction:column;min-height:0;cursor:zoom-in;background:none;border:0;text-align:left;color:inherit;font:inherit}
+.tile .pic{flex:1;min-height:0;overflow:hidden;background:#fff}
+.tile .pic img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 400ms var(--ease)}
+.tile:hover .pic img{transform:scale(1.04)}
+.tile b{margin-top:12px;white-space:nowrap}
+.res{flex:1;display:grid;grid-template-columns:1.1fr 1fr;gap:80px;min-height:0}
+.qs{display:flex;flex-direction:column;gap:46px}
+.qhead b{font-size:60px;line-height:1;margin-right:18px}
+.seats{position:relative;display:flex;gap:22px;margin:18px 0 12px;height:84px}
+.seats i{width:84px;height:84px;border-radius:50%;border:5px solid currentColor;display:block}
+.seats i.y{background:currentColor}
+.seats .th{position:absolute;left:calc(4 * 106px - 12px);top:-14px;bottom:-14px;border-left:5px dashed currentColor}
+.verdict{font-size:50px;line-height:1.15;margin-top:auto}
+.refl{display:flex;flex-direction:column;gap:30px}
+.refl p b{display:block}
 
-  /* ---- B: story arc, full bleed -------------------------------------- */
-  .B{justify-content:center}
-  .B-kicker{font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:2.3cqw;
-            color:var(--accent);margin-bottom:1.6cqw}
-  .B-claim{font-size:5cqw;font-weight:800;line-height:1.12;max-width:88%}
-  .B-cards{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:1.6cqw;
-           margin:3cqw 0 3.4cqw}
-  .B-card{border:.25cqw solid var(--ink);padding:1.6cqw;display:flex;flex-direction:column;gap:1cqw}
-  .B-card .lab{font-weight:800;color:var(--accent)}
-  .B-card .fig{font-size:3cqw;font-weight:800;margin-top:auto}
-  .B-foot{position:absolute;left:4cqw;right:4cqw;bottom:2.4cqw;display:flex;justify-content:space-between;
-          font-weight:700;border-top:.25cqw solid var(--ink);padding-top:1cqw}
+/* ---------- motion vocabulary (themes remap the keyframe) ---------- */
+@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes rise{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
+@keyframes focus{from{opacity:0;filter:blur(14px);transform:scale(1.04)}to{opacity:1;filter:blur(0);transform:none}}
+@keyframes maskup{from{clip-path:inset(100% 0 0 0);transform:translateY(40px)}to{clip-path:inset(0 0 0 0);transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+@keyframes draw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes drawx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes fill{from{background:transparent}}
+.on .m{animation:var(--k,rise) 700ms var(--ease) both;animation-delay:calc(var(--d,0) * 1ms)}
+.on .tile{animation:var(--kt,rise) 600ms var(--ease) both;animation-delay:calc(200ms + var(--i) * 55ms)}
+.on .seats i{animation:pop 420ms var(--ease) both;animation-delay:calc(var(--d0) * 1ms + var(--i) * 60ms)}
+.on .seats i.y{animation:pop 420ms var(--ease) both,fill 300ms var(--ease-q) both;animation-delay:calc(var(--d0) * 1ms + var(--i) * 60ms),calc(var(--d0) * 1ms + 500ms)}
+.on .seats .th{transform-origin:top;animation:draw 500ms var(--ease) both;animation-delay:calc(var(--d0) * 1ms + 450ms)}
+.on .rail .cur::after{animation:drawx 600ms var(--ease) 250ms both;transform-origin:left}
 
-  /* ---- C: number first ------------------------------------------------ */
-  .C-two{display:grid;grid-template-columns:38% 1fr;gap:3cqw;flex:1;min-height:0;align-items:start}
-  .C-big{background:var(--accent);color:#fff;padding:2.2cqw;height:100%;
-         display:flex;flex-direction:column;justify-content:center;gap:1cqw}
-  .C-big .num{font-size:8cqw;font-weight:800;line-height:1}
-  .C-big .cap{font-size:2.3cqw;font-weight:700}
-  .C-body{display:flex;flex-direction:column;gap:1.4cqw;min-height:0}
-  .C-body h2{margin-bottom:.4cqw}
-  .C-list{display:flex;flex-direction:column;gap:1.1cqw}
-  .C-item{display:grid;grid-template-columns:12cqw 1fr;gap:1.4cqw;align-items:baseline}
-  .C-item .lab{font-weight:800;color:var(--accent)}
-  .C-spine{display:flex;gap:.4cqw;margin-top:2cqw}
-  .C-spine span{flex:1;height:1.4cqw;border:.18cqw solid var(--ink)}
-  .C-spine span.lit{background:var(--ink)}
+/* ---------- E: Heat (committed tomato, grotesk + serif, wipes) ---------- */
+.tE .slide{background:oklch(0.99 0 0);color:oklch(0.2 0.02 30);font-family:Newsreader,serif}
+.tE h1,.tE h2,.tE .qhead b,.tE .verdict,.tE .tile b,.tE .rail,.tE .refl b{font-family:"Familjen Grotesk",sans-serif;font-weight:700}
+.tE .hero{color:oklch(0.52 0.19 32)}
+.tE .m{--k:wipe}
+.tE .s1{background:oklch(0.5 0.18 32);color:#fff;justify-content:flex-end}
+.tE .s1 h1{font-size:170px;max-width:1500px;margin-bottom:70px}
+.tE .s1 .hero{color:oklch(0.16 0.03 30)}
+.tE .band{margin:-80px -110px 44px;padding:60px 110px 44px;background:oklch(0.5 0.18 32);color:#fff}
+.tE .band .rail{margin-bottom:20px}
+.tE .rail .cur::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:#fff}
+.tE .tile.hot .pic{outline:8px solid oklch(0.52 0.19 32);outline-offset:-8px}
+.tE .tile.hot b{color:oklch(0.52 0.19 32)}
+.tE .refl p{border-top:3px solid currentColor;padding-top:12px}
+.tE .verdict .hero{color:oklch(0.52 0.19 32)}
 
-  /* ---- switcher (not part of the design) ------------------------------ */
-  #bar{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:#111;color:#fff;
-       border:2px solid #fff;border-radius:999px;display:flex;align-items:center;gap:16px;
-       padding:9px 16px;font:700 14px/1 "Segoe UI",sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.5);z-index:9}
-  #bar button{background:#fff;color:#111;border:0;border-radius:999px;min-width:26px;height:26px;
-              padding:0 10px;font:800 14px/1 sans-serif;cursor:pointer;
-              white-space:nowrap;flex:0 0 auto}
-  #bar .sep{color:#fff}
+/* ---------- F: Floor plan (restrained, blueprint grid, highlighter) ---------- */
+.tF .slide{background-color:oklch(0.985 0.004 250);color:oklch(0.22 0.04 255);font-family:"Schibsted Grotesk",sans-serif;
+  background-image:linear-gradient(oklch(0.9 0.02 250) 1px,transparent 1px),linear-gradient(90deg,oklch(0.9 0.02 250) 1px,transparent 1px);background-size:60px 60px;background-position:-1px -1px}
+.tF h1,.tF h2,.tF .qhead b,.tF .verdict{font-weight:800;letter-spacing:-.02em}
+.tF .rail,.tF .qbar{font-family:"JetBrains Mono",monospace;font-weight:500}
+.tF .tile b{font-weight:600}
 
-  /* tap the left/right third of the slide to move — phones have no arrow keys */
-  .zone{position:absolute;top:0;bottom:0;width:32%;z-index:5;-webkit-tap-highlight-color:transparent}
-  #zl{left:0} #zr{right:0}
-  /* a phone held upright would show a matchbox-sized slide, so turn the slide instead */
-  @media (orientation:portrait) and (max-width:900px){
-    #stage{width:min(80vh, calc((100vw - 16px) * 16 / 9));flex:none;transform:rotate(90deg)}
-  }
-  @media (max-width:820px){
-    #bar{gap:8px;padding:9px 11px;font-size:12px;max-width:96vw}
-    #bar button{min-width:34px;height:34px;font-size:15px}
-    #bar #tm, #bar .sep:last-of-type{display:none}  /* time budget is for the builder, not the voter */
-  }
+.tF .hero{background:linear-gradient(oklch(0.9 0.17 100),oklch(0.9 0.17 100)) no-repeat 0 85%/100% 45%;padding:0 .08em}
+.tF .on .hero{animation:hl 700ms var(--ease) 650ms both}
+@keyframes hl{from{background-size:0% 45%}}
+.tF .rail .cur{font-weight:700}
+.tF .rail .cur::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:oklch(0.22 0.04 255)}
+.tF .tile .pic{border:2px solid oklch(0.22 0.04 255)}
+.tF .tile.hot .pic{border:6px solid oklch(0.22 0.04 255);box-shadow:10px 10px 0 oklch(0.9 0.17 100)}
+.tF .s1 .plan{position:absolute;right:110px;top:120px;width:560px;height:560px;border:5px solid oklch(0.22 0.04 255)}
+.tF .s1 .plan::before{content:"D1";position:absolute;inset:0;display:grid;place-items:center;font:800 150px "Schibsted Grotesk";}
+.tF .s1 .plan::after{content:"";position:absolute;left:0;right:0;top:0;height:34%;background:repeating-linear-gradient(45deg,oklch(0.9 0.17 100) 0 14px,transparent 14px 28px);border-bottom:5px solid oklch(0.22 0.04 255)}
+.tF .on .plan{animation:wipe 900ms var(--ease) 200ms both}
+.tF .s1 h1{max-width:1080px}
+.tF .refl p{background:oklch(0.985 0.004 250);border:2px solid oklch(0.22 0.04 255);padding:18px 24px}
+.tF .qs{background:oklch(0.985 0.004 250);border:2px solid oklch(0.22 0.04 255);padding:30px 34px}
+
+/* ---------- G: Night market (dark green-black, amber glow, focus pulls) ---------- */
+.tG .slide{background:radial-gradient(120% 90% at 80% 0%,oklch(0.24 0.03 160),oklch(0.15 0.015 160) 60%);color:oklch(0.96 0.01 90);font-family:Figtree,sans-serif}
+.tG h1,.tG h2,.tG .qhead b,.tG .verdict,.tG .rail,.tG .tile b,.tG .refl b{font-family:"Bricolage Grotesque",sans-serif;font-weight:800}
+.tG .hero{color:oklch(0.82 0.16 75);text-shadow:0 0 38px oklch(0.82 0.16 75 / .55)}
+.tG .m{--k:focus}.tG .tile{--kt:focus}
+.tG .rail .cur{color:oklch(0.82 0.16 75)}
+.tG .rail .cur::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:oklch(0.82 0.16 75);box-shadow:0 0 18px oklch(0.82 0.16 75)}
+.tG .tile .pic{border-radius:14px}
+.tG .tile.hot .pic{box-shadow:0 0 0 6px oklch(0.82 0.16 75),0 0 60px oklch(0.82 0.16 75 / .45)}
+.tG .tile.hot b{color:oklch(0.82 0.16 75)}
+.tG .s1{justify-content:center}
+.tG .s1 .lamp{position:absolute;right:-160px;top:-200px;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,oklch(0.82 0.16 75 / .35),transparent 65%)}
+.tG .on .lamp{animation:focus 1400ms var(--ease) both}
+.tG .s1 .meta{margin-top:90px}
+.tG .refl p{background:oklch(0.22 0.02 160);border-radius:16px;padding:20px 26px}
+
+/* ---------- H: Newsprint (true white, serif display, masked line reveals) ---------- */
+.tH .slide{background:#fff;color:#111;font-family:"Instrument Sans",sans-serif}
+.tH h1,.tH h2,.tH .qhead b,.tH .verdict{font-family:"Instrument Serif",serif;font-weight:400}
+.tH h1{font-size:176px;letter-spacing:-.02em}.tH h2{font-size:104px}
+.tH .hero{color:oklch(0.52 0.21 27);font-style:italic}
+.tH .m{--k:maskup}
+.tH .rule{height:3px;background:#111;transform-origin:left}
+.tH .on .rule{animation:drawx 900ms var(--ease) both}
+.tH .rail{margin-bottom:18px}
+.tH .rail .cur{font-weight:600}
+.tH .rail .cur::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;background:oklch(0.52 0.21 27)}
+.tH .head{border-bottom:3px solid #111;padding-bottom:26px}
+.tH .tile .pic{border:1px solid #111}
+.tH .tile.hot b{color:oklch(0.52 0.21 27)}
+.tH .tile.hot .pic{border:5px solid oklch(0.52 0.21 27)}
+.tH .s1 .rule{margin:50px 0 40px}
+.tH .refl p{border-top:1px solid #111;padding-top:14px}
+.tH .qhead b{font-size:76px}
+
+/* theme-only decorations */
+.plan,.lamp,.rule{display:none}
+.tF .plan,.tG .lamp,.tH .rule{display:block}
+
+/* ---------- zoom: a tile opens full size ---------- */
+#zoom{position:absolute;inset:0;display:none;flex-direction:column;padding:50px 110px 40px;z-index:5;cursor:zoom-out}
+#zoom.open{display:flex}
+#zoom .box{flex:1;min-height:0;background:#fff;padding:20px}
+#zoom img{width:100%;height:100%;object-fit:contain}
+#zoom b{font-size:34px;margin-top:16px}
+.tE #zoom,.tH #zoom{background:#fff;color:#111}.tF #zoom{background:oklch(0.985 0.004 250);color:oklch(0.22 0.04 255)}
+.tG #zoom{background:oklch(0.15 0.015 160);color:oklch(0.96 0.01 90)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important}}
+
+/* ---------- control bar (not part of the deck) ---------- */
+#bar{position:fixed;left:0;right:0;bottom:0;height:64px;background:#000;color:#fff;display:flex;align-items:center;gap:10px;padding:0 14px;font:15px system-ui,sans-serif;z-index:9}
+#bar button{font:inherit;padding:8px 14px;border:1px solid #fff;background:#000;color:#fff;border-radius:6px;cursor:pointer}
+#bar button.on{background:#fff;color:#000}
+#state{margin-left:auto;white-space:nowrap}
 </style>
 </head>
 <body>
-<div id="stage"></div>
+<div id="viewport"><div class="stage" id="stage">
+
+<!-- Frame 1: Title (storyboard frame 1, 20 s) -->
+<section class="slide s1">
+  <div class="plan"></div><div class="lamp"></div>
+  <div class="body m" style="--d:0">Design Thinking Report</div>
+  <h1 class="m" style="--d:120">Canteen D1 at <span class="hero">Lunch Peak</span></h1>
+  <div class="rule"></div>
+  <div class="meta m" style="--d:450">
+    <div>Domain: University canteen<br>Sub-domain: canteen environment, canteen D1, lunch peak 11:30-13:00, while eating a meal</div>
+    <div>Group 1<br>1203220 Business Innovation in the Digital Era<br>Semester 1/2026</div>
+  </div>
+</section>
+
+<!-- Frame 4: Empathy tools (storyboard frame 4, 60 s). Click a tile: it opens full size. -->
+<section class="slide s2">
+  <div class="head band">
+    <div class="rail m" style="--d:0"><span class="cur">Empathize</span><span>Define</span><span>Ideate</span><span>Prototype</span><span>Test</span></div>
+    <h2 class="m" style="--d:80">Empathy Tools</h2>
+  </div>
+  <div class="tiles">
+    <button class="tile" style="--i:0"><div class="pic"><img src="img/g1-fig01-affinity.jpg" alt="Affinity diagram"></div><b>Affinity, Table 3</b></button>
+    <button class="tile hot" style="--i:1"><div class="pic"><img src="img/g1-fig02-persona.jpg" alt="Persona Fah"></div><b>Persona Fah, Table 4</b></button>
+    <button class="tile" style="--i:2"><div class="pic"><img src="img/g1-fig03-empathy.jpg" alt="Empathy map"></div><b>Empathy map, Table 5</b></button>
+    <button class="tile" style="--i:3"><div class="pic"><img src="img/g1-fig04-voc.jpg" alt="Voice of the Customer"></div><b>VoC, Table 6</b></button>
+    <button class="tile" style="--i:4"><div class="pic"><img src="img/g1-fig05-journey.jpg" alt="Journey map"></div><b>Journey map, Table 7</b></button>
+    <button class="tile" style="--i:5"><div class="pic"><img src="img/g1-fig06-vpc.jpg" alt="Value Proposition Canvas"></div><b>VPC, Table 8</b></button>
+    <button class="tile" style="--i:6"><div class="pic"><img src="img/g1-fig08-stakeholder.jpg" alt="Stakeholder map"></div><b>Stakeholders, Fig. 2</b></button>
+    <button class="tile" style="--i:7"><div class="pic"><img src="img/g1-fig07-insights.jpg" alt="Key insights"></div><b>Key insights, Table 9</b></button>
+  </div>
+  <div id="zoom"><div class="box"><img alt=""></div><b></b></div>
+</section>
+
+<!-- Frame 12: Test results + reflection (storyboard frame 12, 55 s). One circle = one tester. -->
+<section class="slide s3">
+  <div class="head band">
+    <div class="rail m" style="--d:0"><span>Empathize</span><span>Define</span><span>Ideate</span><span>Prototype</span><span class="cur">Test</span></div>
+    <h2 class="m" style="--d:80">What the Test Showed</h2>
+  </div>
+  <div class="res">
+    <div class="qs">
+      <div class="q">
+        <div class="qhead m" style="--d:200"><b>1 of 6</b>Understands it (Q1)</div>
+        <div class="seats" style="--d0:300"><i class="y" style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><span class="th"></span></div>
+        <div class="qbar m" style="--d:700">threshold: 4 of 6 or more</div>
+      </div>
+      <div class="q">
+        <div class="qhead m" style="--d:600"><b>2 of 6</b>Would use it (Q3)</div>
+        <div class="seats" style="--d0:700"><i class="y" style="--i:0"></i><i class="y" style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i><span class="th"></span></div>
+        <div class="qbar m" style="--d:1100">threshold: 4 of 6 or more</div>
+      </div>
+      <div class="verdict m" style="--d:1350"><span class="hero">Fail.</span> Persevere: rebuild the card and shrink the zone.</div>
+    </div>
+    <div class="refl">
+      <p class="m" style="--d:1700"><b>What we expected</b>"RUSH ZONE" would tell a stranger who the tables are for.</p>
+      <p class="m" style="--d:1850"><b>What actually happened</b>The card was read as the busiest spot, a booking area and a no-sitting area.</p>
+      <p class="m" style="--d:2000"><b>What we would change</b>The card has to say who the seats are for and that sitting is welcome; the zone has to be smaller.</p>
+    </div>
+  </div>
+</section>
+
+</div></div>
 
 <div id="bar">
-  <button id="pv">&#8592;</button>
-  <span id="sl">slide</span>
-  <button id="nx">&#8594;</button>
-  <span class="sep">|</span>
-  <span id="vn">variant</span>
-  <button id="vb">shape</button>
-  <span class="sep">|</span>
-  <span id="tm">time</span>
+  <span>Theme:</span>
+  <button data-t="E">E Heat</button><button data-t="F">F Floor plan</button><button data-t="G">G Night market</button><button data-t="H">H Newsprint</button>
+  <span style="margin-left:14px">Slide:</span>
+  <button data-s="0">1</button><button data-s="1">2</button><button data-s="2">3</button>
+  <button id="replay" style="margin-left:14px">Replay motion</button>
+  <span id="state"></span>
 </div>
 
 <script>
-/* ---- the 12 beats of ONE group's talk. Same content in all three shapes, so only
-       SHAPE is judged. No second group anywhere: [canteen] is this group's canteen. ---- */
-const STAGES = ['Empathize','Define','Ideate','Prototype','Test'];
-
-const SLIDES = [
-  { stage:null, kicker:'1203220 Business Innovation', sec:45,
-    title:'[Deck title — the promise, not the assignment name]',
-    claim:'[One sentence: what we set out to fix at lunch peak in canteen [X]]',
-    big:{ num:'[N]', cap:'[members in the group]' },
-    rows:[ {lab:'Group', txt:'[Group name / number]', fig:'[canteen X]'},
-           {lab:'Leader', txt:'[Leader name, student ID]', fig:'[ID]'},
-           {lab:'Members', txt:'[Names, IDs]', fig:'[N people]'} ] },
-
-  { stage:null, kicker:'Purpose', sec:40,
-    title:'Why this domain',
-    claim:'[Domain: university canteen · sub-domain: canteen environment, canteen [X], lunch peak 11:30-13:00, while eating]',
-    big:{ num:'[90]', cap:'[minutes of lunch peak, 11:30-13:00]' },
-    rows:[ {lab:'Where', txt:'[Canteen X — what it is, how many seats]', fig:'[seats]'},
-           {lab:'When', txt:'[Why the peak hour and not the whole day]', fig:'[11:30-13:00]'},
-           {lab:'Who', txt:'[Students eating a meal, not staff, not takeaway]', fig:'[scope]'} ] },
-
-  { stage:null, kicker:'The problem', sec:50,
-    title:'[What lunch peak actually looks like]',
-    claim:'[The scene in one sentence a stranger would recognise]',
-    big:{ num:'[n]', cap:'[the symptom, as a number]' },
-    rows:[ {lab:'Symptom', txt:'[The visible symptom we walked in on]', fig:'[Fig n]'},
-           {lab:'Observed', txt:'[Observation sessions — when, how long]', fig:'[n sessions]'},
-           {lab:'Immersion', txt:'[What we did ourselves, as users]', fig:'[Fig n]'} ] },
-
-  { stage:'Empathize', kicker:'Who we talked to', sec:50,
-    title:'How we got the evidence',
-    claim:'[Face-to-face interviews at the table, during the meal, recorded and consented]',
-    big:{ num:'[n]', cap:'[people interviewed, all in canteen [X]]' },
-    rows:[ {lab:'Interviews', txt:'[Pairs of 2 — one asks, one types]', fig:'[n rows]'},
-           {lab:'Dates', txt:'[Fieldwork window]', fig:'[dates]'},
-           {lab:'Tools', txt:'[Empathy map · persona · journey map · VoC]', fig:'[Fig n-n]'} ] },
-
-  { stage:'Empathize', kicker:'What we heard', sec:55,
-    title:'[The thing people said that we did not expect]',
-    claim:'[One quote, verbatim, in their own words]',
-    big:{ num:'[n/n]', cap:'[said the same thing — the top cluster]' },
-    rows:[ {lab:'Cluster 1', txt:'[Top affinity cluster]', fig:'[n rows]'},
-           {lab:'Cluster 2', txt:'[Second cluster]', fig:'[n rows]'},
-           {lab:'Persona', txt:'[Who we built the persona from]', fig:'[Fig n]'} ] },
-
-  { stage:'Define', kicker:'Insight', sec:60,
-    title:'The root cause, not the complaint',
-    claim:'[Why the obvious answer — more staff, more tables — is the wrong lever]',
-    big:{ num:'[5]', cap:'[Whys down to the root cause]' },
-    rows:[ {lab:'Complaint', txt:'[What they said the problem was]', fig:'[surface]'},
-           {lab:'Root cause', txt:'[What the 5 Whys actually reached]', fig:'[Fig n]'},
-           {lab:'POV', txt:'[Persona] needs [need] because [insight]', fig:'[POV]'} ] },
-
-  { stage:'Ideate', kicker:'How might we', sec:45,
-    title:'[The HMW question we chose to answer]',
-    claim:'[HMW ... ?]',
-    big:{ num:'[n]', cap:'[ideas generated, then narrowed]' },
-    rows:[ {lab:'HMW', txt:'[The question, and the two we dropped]', fig:'[3 HMW]'},
-           {lab:'Ideas', txt:'[How the session ran — everyone contributed]', fig:'[n ideas]'},
-           {lab:'Narrowed', txt:'[2x2 grid: impact against effort]', fig:'[Fig n]'} ] },
-
-  { stage:'Ideate', kicker:'The idea', sec:60,
-    title:'[Name of the chosen idea]',
-    claim:'[What it is, in one sentence someone could build]',
-    big:{ num:'[1]', cap:'[idea taken forward, out of [n]]' },
-    rows:[ {lab:'Why this', txt:'[The selection criteria it won on]', fig:'[rank 1]'},
-           {lab:'Runner-up', txt:'[What we dropped and why]', fig:'[rank 2]'},
-           {lab:'Fits POV', txt:'[How it answers the POV, not the complaint]', fig:'[link]'} ] },
-
-  { stage:'Prototype', kicker:'Prototype', sec:60,
-    title:'What we built to test it',
-    claim:'[The cheapest thing that could prove the idea wrong]',
-    big:{ num:'[฿n]', cap:'[cost to build the prototype]' },
-    rows:[ {lab:'Form', txt:'[Paper / mock / storyboard / walkthrough]', fig:'[Fig n]'},
-           {lab:'Built in', txt:'[Time to build]', fig:'[n hours]'},
-           {lab:'v2', txt:'[What changed after the first round]', fig:'[Fig n]'} ] },
-
-  { stage:'Test', kicker:'What the test showed', sec:70,
-    title:'[The result, stated as a number]',
-    claim:'[What changed — and the one thing that did not work]',
-    big:{ num:'[n]', cap:'[testers, incl. extreme and lead users]' },
-    rows:[ {lab:'Worked', txt:'[What the testers accepted]', fig:'[result]'},
-           {lab:'Failed', txt:'[What broke — say it out loud]', fig:'[result]'},
-           {lab:'Extreme', txt:'[What the extreme / lead user saw that others missed]', fig:'[Fig n]'} ] },
-
-  { stage:null, kicker:'Next', sec:50,
-    title:'What we would do next',
-    claim:'[The next iteration, and what would have to be true for it to scale]',
-    big:{ num:'[n]', cap:'[weeks to the next test]' },
-    rows:[ {lab:'Next test', txt:'[The next thing to falsify]', fig:'[when]'},
-           {lab:'Owner', txt:'[Who runs it]', fig:'[who]'},
-           {lab:'Learned', txt:'[What the process taught us, not the idea]', fig:'[reflection]'} ] },
-
-  { stage:null, kicker:'Q&A', sec:15,   /* hand-off only; the Q&A clock is separate */
-    title:'Questions',
-    claim:'[Thank you — group name, members and IDs]',
-    big:{ num:'[N]', cap:'[of us, any one can take the question]' },
-    rows:[ {lab:'Group', txt:'[Group name, canteen X]', fig:'[group]'},
-           {lab:'Members', txt:'[All names and IDs]', fig:'[N people]'},
-           {lab:'Report', txt:'[Submitted — date]', fig:'[date]'} ] }
-];
-
-const NAMES = { A:'Stage spine', B:'Story arc', C:'Number first' };
-
-/* ---- one render function per shape. Data is shared, layout is not. ---- */
-function renderA(s, i){
-  const rail = STAGES.map(st =>
-    `<span class="${st===s.stage?'lit':''}">${st}</span>`).join('');
-  const rows = s.rows.map(r =>
-    `<div class="A-row"><div class="lab">${r.lab}</div><div>${r.txt}</div><div class="fig">${r.fig}</div></div>`).join('');
-  return `<div class="slide">
-    <div class="A-rail">${rail}</div>
-    <h2>${s.title}</h2>
-    <div class="A-claim">${s.claim}</div>
-    <div class="A-rows">${rows}</div>
-    <div class="A-foot">${s.kicker} · slide ${i+1} of ${SLIDES.length}</div>
-  </div>`;
-}
-
-function renderB(s, i){
-  const cards = s.rows.map(r =>
-    `<div class="B-card"><div class="lab">${r.lab}</div><div>${r.txt}</div><div class="fig">${r.fig}</div></div>`).join('');
-  return `<div class="slide B">
-    <div class="B-kicker">${s.kicker}</div>
-    <div class="B-claim">${s.claim}</div>
-    <div class="B-cards">${cards}</div>
-    <div class="B-foot"><span>${s.stage ? s.stage : s.title}</span><span>${i+1} / ${SLIDES.length}</span></div>
-  </div>`;
-}
-
-function renderC(s, i){
-  const items = s.rows.map(r =>
-    `<div class="C-item"><div class="lab">${r.lab}</div><div>${r.txt}</div></div>`).join('');
-  const spine = SLIDES.map((_, k) => `<span class="${k===i?'lit':''}"></span>`).join('');
-  return `<div class="slide">
-    <div class="C-two">
-      <div class="C-big"><div class="num">${s.big.num}</div><div class="cap">${s.big.cap}</div></div>
-      <div class="C-body">
-        <h2>${s.title}</h2>
-        <div style="font-weight:700">${s.claim}</div>
-        <div class="C-list">${items}</div>
-      </div>
-    </div>
-    <div class="C-spine">${spine}</div>
-  </div>`;
-}
-
-const RENDER = { A:renderA, B:renderB, C:renderC };
-
-/* ---- state ---- */
-const params = new URLSearchParams(location.search);
-let variant = (params.get('variant') || 'A').toUpperCase();
-if(!RENDER[variant]) variant = 'A';
-let idx = 0;
-
-const TOTAL = SLIDES.reduce((a, s) => a + s.sec, 0);
-const mmss = t => Math.floor(t/60) + ':' + String(t%60).padStart(2,'0');
-
-function draw(){
-  document.getElementById('stage').innerHTML = RENDER[variant](SLIDES[idx], idx) +
-    '<div class="zone" id="zl"></div><div class="zone" id="zr"></div>';
-  document.getElementById('zl').onclick = () => go(-1);
-  document.getElementById('zr').onclick = () => go(1);
-  const start = SLIDES.slice(0, idx).reduce((a, s) => a + s.sec, 0);
-  document.getElementById('sl').textContent = `slide ${idx+1}/${SLIDES.length}`;
-  document.getElementById('vn').textContent = `${variant} — ${NAMES[variant]}`;
-  document.getElementById('tm').textContent =
-    `${mmss(start)}–${mmss(start + SLIDES[idx].sec)} of ${mmss(TOTAL)}`;
-  const u = new URL(location); u.searchParams.set('variant', variant);
-  history.replaceState(null, '', u);
-}
-
-const keys = Object.keys(RENDER);
-const cycle = () => { variant = keys[(keys.indexOf(variant)+1) % keys.length]; draw(); };
-const go = d => { idx = (idx + d + SLIDES.length) % SLIDES.length; draw(); };
-
-document.getElementById('pv').onclick = () => go(-1);
-document.getElementById('nx').onclick = () => go(1);
-document.getElementById('vb').onclick = cycle;
-
-addEventListener('keydown', e => {
-  const t = e.target;
-  if(t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
-  if(e.key === 'ArrowRight') go(1);
-  else if(e.key === 'ArrowLeft') go(-1);
-  else if(e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === ' ') { e.preventDefault(); cycle(); }
-  else if('abcABC'.includes(e.key) && RENDER[e.key.toUpperCase()]) { variant = e.key.toUpperCase(); draw(); }
-});
-
-draw();
+const stage=document.getElementById('stage'),slides=[...document.querySelectorAll('.slide')],zoom=document.getElementById('zoom');
+const q=new URLSearchParams(location.search),names={E:'Heat',F:'Floor plan',G:'Night market',H:'Newsprint'};
+let t=(q.get('theme')||'E').toUpperCase(),s=+(q.get('slide')||1)-1,k=1;
+if(!(t in names))t='E'; if(!(s>=0&&s<3))s=0;
+function fit(){const v=document.getElementById('viewport').getBoundingClientRect();
+  k=Math.min(v.width/1920,v.height/1080);stage.style.transform=`translate(-50%,-50%) scale(${k})`}
+function show(){closeZoom(true);stage.className='stage t'+t;
+  slides.forEach(e=>e.classList.remove('on'));void stage.offsetWidth;   // reflow so the entrance replays
+  slides[s].classList.add('on');
+  document.querySelectorAll('[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
+  document.querySelectorAll('[data-s]').forEach(b=>b.classList.toggle('on',+b.dataset.s===s));
+  document.getElementById('state').textContent=`Theme ${t} (${names[t]}) · slide ${s+1}/3`;
+  history.replaceState(null,'',`?theme=${t}&slide=${s+1}`)}
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let from=null;
+function rel(el){const a=el.getBoundingClientRect(),b=stage.getBoundingClientRect();
+  return {x:(a.left-b.left)/k,y:(a.top-b.top)/k,w:a.width/k,h:a.height/k}}
+function openZoom(tile){from=tile.querySelector('.pic');
+  zoom.querySelector('img').src=tile.querySelector('img').src;zoom.querySelector('b').textContent=tile.querySelector('b').textContent;
+  zoom.classList.add('open');if(reduce)return;
+  const f=rel(from),box=zoom.querySelector('.box'),l=rel(box);   // FLIP: grow from the tile
+  box.animate([{transform:`translate(${f.x-l.x}px,${f.y-l.y}px) scale(${f.w/l.w},${f.h/l.h})`,transformOrigin:'0 0'},{transform:'none',transformOrigin:'0 0'}],{duration:520,easing:'cubic-bezier(0.16,1,0.3,1)'});
+  zoom.animate([{backgroundColor:'transparent'},{}],{duration:300})}
+function closeZoom(now){if(!zoom.classList.contains('open'))return;
+  if(now||reduce||!from){zoom.classList.remove('open');return}
+  const box=zoom.querySelector('.box'),f=rel(from),l=rel(box);
+  box.animate([{transform:'none',transformOrigin:'0 0'},{transform:`translate(${f.x-l.x}px,${f.y-l.y}px) scale(${f.w/l.w},${f.h/l.h})`,transformOrigin:'0 0'}],{duration:390,easing:'cubic-bezier(0.25,1,0.5,1)'}).onfinish=()=>zoom.classList.remove('open')}
+document.getElementById('bar').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.t)t=b.dataset.t;else if(b.dataset.s)s=+b.dataset.s;show()};
+addEventListener('keydown',e=>{if(e.key==='Escape')return closeZoom();
+  if(e.key==='ArrowRight')s=Math.min(2,s+1);else if(e.key==='ArrowLeft')s=Math.max(0,s-1);
+  else if(e.key.length===1&&'efghEFGH'.includes(e.key))t=e.key.toUpperCase();else return;show()});
+document.getElementById('viewport').onclick=e=>{
+  if(zoom.classList.contains('open'))return closeZoom();
+  const tile=e.target.closest('.tile');if(tile)return openZoom(tile);
+  const x=e.clientX/innerWidth;if(x<1/3)s=Math.max(0,s-1);else if(x>2/3)s=Math.min(2,s+1);else return;show()};
+addEventListener('resize',fit);fit();show();
 </script>
 </body>
 </html>
